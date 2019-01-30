@@ -1,2 +1,3 @@
-# thesises-system
-The system maintains information about the thesises and managing directors in the University of Mathematics and Informatics in Sofia.
+# Thesises system
+
+The system maintains information about the thesises and managing directors in the University of Mathematics and Informatics in Sofia. Imformation about implementation of this system can be found in this document (in Bulgarian).
