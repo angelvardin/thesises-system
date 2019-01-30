@@ -1,0 +1,83 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{87784659-611A-4C10-8490-4177488C784E}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dlls", "dlls", "{A74459CC-0685-4165-A693-BAA91BE430AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DissProject.Models", "DissProject.Models\DissProject.Models.csproj", "{1DA980F1-84FC-4D00-A5F3-4CB603BD6645}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DissProject.DataLayer", "DissProject.DataLayer\DissProject.DataLayer.csproj", "{B4F10FBD-4092-4959-88C1-392A35C29609}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DissProject.Repository", "DissProject.Repository\DissProject.Repository.csproj", "{806080D0-5360-4EAB-A7E1-EF3AE9124C53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DissProject.Site", "DissProject.Site\DissProject.Site.csproj", "{52787D4C-AC54-4EB6-84FB-F97FBD314038}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DissProject.Site.Tests", "DissProject.Site.Tests\DissProject.Site.Tests.csproj", "{FFE1BF2E-0785-422C-B319-B5AE97BBAEA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentGeneration", "DocumentGeneration\DocumentGeneration.csproj", "{7A8C8085-D0CE-4C07-966A-3FA2FB7AA06C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1DA980F1-84FC-4D00-A5F3-4CB603BD6645}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DA980F1-84FC-4D00-A5F3-4CB603BD6645}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DA980F1-84FC-4D00-A5F3-4CB603BD6645}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DA980F1-84FC-4D00-A5F3-4CB603BD6645}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4F10FBD-4092-4959-88C1-392A35C29609}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4F10FBD-4092-4959-88C1-392A35C29609}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4F10FBD-4092-4959-88C1-392A35C29609}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4F10FBD-4092-4959-88C1-392A35C29609}.Release|Any CPU.Build.0 = Release|Any CPU
+		{806080D0-5360-4EAB-A7E1-EF3AE9124C53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{806080D0-5360-4EAB-A7E1-EF3AE9124C53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{806080D0-5360-4EAB-A7E1-EF3AE9124C53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{806080D0-5360-4EAB-A7E1-EF3AE9124C53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52787D4C-AC54-4EB6-84FB-F97FBD314038}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52787D4C-AC54-4EB6-84FB-F97FBD314038}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52787D4C-AC54-4EB6-84FB-F97FBD314038}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52787D4C-AC54-4EB6-84FB-F97FBD314038}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFE1BF2E-0785-422C-B319-B5AE97BBAEA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFE1BF2E-0785-422C-B319-B5AE97BBAEA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFE1BF2E-0785-422C-B319-B5AE97BBAEA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFE1BF2E-0785-422C-B319-B5AE97BBAEA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A8C8085-D0CE-4C07-966A-3FA2FB7AA06C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A8C8085-D0CE-4C07-966A-3FA2FB7AA06C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A8C8085-D0CE-4C07-966A-3FA2FB7AA06C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A8C8085-D0CE-4C07-966A-3FA2FB7AA06C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 7
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs37
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = DissProject.DataLayer\\DissProject.DataLayer.csproj
+		SccProjectName1 = DissProject.DataLayer
+		SccLocalPath1 = DissProject.DataLayer
+		SccProjectUniqueName2 = DissProject.Models\\DissProject.Models.csproj
+		SccProjectName2 = DissProject.Models
+		SccLocalPath2 = DissProject.Models
+		SccProjectUniqueName3 = DissProject.Repository\\DissProject.Repository.csproj
+		SccProjectName3 = DissProject.Repository
+		SccLocalPath3 = DissProject.Repository
+		SccProjectUniqueName4 = DissProject.Site.Tests\\DissProject.Site.Tests.csproj
+		SccProjectName4 = DissProject.Site.Tests
+		SccLocalPath4 = DissProject.Site.Tests
+		SccProjectUniqueName5 = DissProject.Site\\DissProject.Site.csproj
+		SccProjectName5 = DissProject.Site
+		SccLocalPath5 = DissProject.Site
+		SccProjectUniqueName6 = DocumentGeneration\\DocumentGeneration.csproj
+		SccProjectName6 = DocumentGeneration
+		SccLocalPath6 = DocumentGeneration
+	EndGlobalSection
+EndGlobal

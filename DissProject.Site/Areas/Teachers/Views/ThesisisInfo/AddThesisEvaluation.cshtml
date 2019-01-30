@@ -1,0 +1,151 @@
+﻿@model DissProject.Models.ThesisEvaluation
+
+@{
+    ViewBag.Title = "AddThesisEvaluation";
+    Layout = "~/Areas/Teachers/Views/Shared/_Layout.cshtml";
+}
+
+<h2> Рецензия за дипломна работа </h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true) 
+
+    <fieldset class="withBorder">
+        <legend>Общи критерии</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TheoreticalConsistencyGrade)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.TheoreticalConsistencyGrade, (IEnumerable<SelectListItem>)ViewBag.PossibleGradesSelectList) 
+            @Html.ValidationMessageFor(model => model.TheoreticalConsistencyGrade)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PersonalIdeasGrade)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor( model => model.PersonalIdeasGrade, (IEnumerable<SelectListItem>)ViewBag.PossibleGradesSelectList )
+            @Html.ValidationMessageFor(model => model.PersonalIdeasGrade)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ExecutionGrade)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.ExecutionGrade, (IEnumerable<SelectListItem>)ViewBag.PossibleGradesSelectList )
+            @Html.ValidationMessageFor(model => model.ExecutionGrade)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.StyleGrade)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.StyleGrade, (IEnumerable<SelectListItem>)ViewBag.PossibleGradesSelectList)
+            @Html.ValidationMessageFor(model => model.StyleGrade)
+        </div>
+    </fieldset>
+    <fieldset class="withBorder">
+        <legend>Реализация</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.StructuralGrade)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.StructuralGrade, (IEnumerable<SelectListItem>)ViewBag.PossibleGradesSelectList)
+            @Html.ValidationMessageFor(model => model.StructuralGrade)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FunctionalityGrade)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.FunctionalityGrade, (IEnumerable<SelectListItem>)ViewBag.PossibleGradesSelectList)
+            @Html.ValidationMessageFor(model => model.FunctionalityGrade)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ReliabilityGrade)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.ReliabilityGrade, (IEnumerable<SelectListItem>)ViewBag.PossibleGradesSelectList)
+            @Html.ValidationMessageFor(model => model.ReliabilityGrade)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DocumentationGrade)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.DocumentationGrade, (IEnumerable<SelectListItem>)ViewBag.PossibleGradesSelectList)
+            @Html.ValidationMessageFor(model => model.DocumentationGrade)
+        </div>
+    </fieldset>
+    <fieldset class="withBorder">
+        <legend> Експериментална част </legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ExperimentDescriptionGrade)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.ExperimentDescriptionGrade, (IEnumerable<SelectListItem>)ViewBag.PossibleGradesSelectList) )
+            @Html.ValidationMessageFor(model => model.ExperimentDescriptionGrade)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ResultsPresentationGrade)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.ResultsPresentationGrade, (IEnumerable<SelectListItem>)ViewBag.PossibleGradesSelectList)
+            @Html.ValidationMessageFor(model => model.ResultsPresentationGrade)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.InterpretationOfResultsGrade)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.InterpretationOfResultsGrade, (IEnumerable<SelectListItem>)ViewBag.PossibleGradesSelectList)
+            @Html.ValidationMessageFor(model => model.InterpretationOfResultsGrade)
+        </div>
+    </fieldset>
+    <fieldset class="withBorder">
+        <legend> Обобщение </legend>
+        <div class="editor-label">
+            @Html.LabelFor( model => model.OverallGrade )
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor( model => model.OverallGrade, (IEnumerable<SelectListItem>)ViewBag.PossibleGradesSelectList )
+            @Html.ValidationMessageFor(model => model.OverallGrade)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor( model => model.OverallOpinion )
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor( model => model.OverallOpinion )
+            @Html.ValidationMessageFor(model => model.OverallOpinion)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor( model => model.Questions )
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor( model => model.Questions )
+            @Html.ValidationMessageFor(model => model.Questions )
+        </div>
+
+        @Html.Hidden("studentId", new { studentId = Model.Thesis.Student.PersonId })
+    </fieldset>
+    <p>
+        @{
+            string submitText = ViewBag.IsEditOperation == true ? "Обнови" : "Добави";
+        }
+        <input type="submit" value=@submitText />
+    </p>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

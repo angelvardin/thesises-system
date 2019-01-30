@@ -1,0 +1,61 @@
+﻿@model IEnumerable<DissProject.Models.IndividualPlan>
+
+@{
+    ViewBag.Title = "Работен план";
+}
+
+@*<h2>Index</h2>*@
+
+<p>
+    @if(this.Model.Count() == 0)
+    {
+        @Html.ActionLink("Създаване на нов индивидуален план", "Create", null, new { @class="button-med"})
+    }
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.GratuationDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Specialty)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhdThesisTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FacultyProtocol)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.GratuationDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Specialty)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhdThesisTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FacultyProtocol)
+        </td>
+        <td>
+            @Html.ActionLink("Редактирай", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Изтрий", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
+
+ @using (Html.BeginForm("ExportData", "IndividualPlan", FormMethod.Post, new { enctype = "multipart/form-data" }))
+         {
+        <table>
+         <tr><td></td><td><input class="button-med" type="submit" name="Export" id="Export" value="Export"/></td></tr>
+        
+        </table>
+         }

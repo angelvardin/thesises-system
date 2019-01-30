@@ -1,0 +1,64 @@
+﻿@model DissProject.Models.IndividualPlan
+@{
+    ViewBag.Title = "Промяна на индивидуален работен план";
+}
+
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>IndividualPlan</legend>
+
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.GratuationDate)
+
+        </div>
+        <div class="editor-field">   
+            @Html.TextBoxFor(m => m.GratuationDate, new { id = "date"} )       
+           
+            @Html.ValidationMessageFor(model => model.GratuationDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Specialty)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Specialty)
+            @Html.ValidationMessageFor(model => model.Specialty)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PhdThesisTitle)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PhdThesisTitle)
+            @Html.ValidationMessageFor(model => model.PhdThesisTitle)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FacultyProtocol)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FacultyProtocol)
+            @Html.ValidationMessageFor(model => model.FacultyProtocol)
+        </div>
+
+        <p>
+            <input type="submit" value="Запази" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Обратно", "Index")
+</div>
+
+@section Scripts {
+        <script type="text/javascript">
+            $('#date').datepicker({ dateFormat: "dd/mm/yy" });
+        </script>
+}

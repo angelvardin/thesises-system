@@ -1,0 +1,23 @@
+﻿@model DissProject.Models.Student
+
+<fieldset>
+    <legend>Student</legend>
+    <div class="display-label">
+        <label> Име </label>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FirstName + model.SecondName + model.LastName)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.SubjectOfStudies)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.SubjectOfStudies)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FacultyNumber)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FacultyNumber)
+    </div>
+</fieldset>

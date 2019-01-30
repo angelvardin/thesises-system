@@ -1,0 +1,128 @@
+﻿@model DissProject.Site.Areas.Teachers.Models.EvaluationCommission
+
+@{
+    ViewBag.Title = "Комисия";
+    Layout = "~/Areas/Teachers/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Назначаване на комисия</h2>
+<br />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>ThesisApplication</legend>
+        <div class="editor-label">
+            @Html.LabelFor(x => x.CommissionChairman)
+        </div>
+        
+       <div class="editor-field">
+           @Html.DropDownListFor(x => x.CommissionChairman, (IEnumerable<SelectListItem>)(ViewBag.Teachers), "--избери--")
+           @Html.ValidationMessageFor(x => x.CommissionChairman)
+       </div>
+    
+        <div class="editor-label">
+            @Html.Label("Членове на комисията")
+        </div>
+        <div class="editor-field">
+            <table id="CommissionTable">
+                <tr>
+                    <td>
+                        @Html.DropDownList("Commission", (IEnumerable<SelectListItem>)(ViewBag.Teachers), "--избери--", new { id = "CommissionDropDown" })
+                    </td>
+                    <td>
+                        <button type="button" id="addCommission" > Add Consultant </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.ListBox("ChosenCommission", (IEnumerable<SelectListItem>)(ViewBag.Commission), new { id = "CommissionListBox" })
+                    </td>
+                    <td>
+                        <button type="button" id="deleteCommission" > Delete Consultant </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        @Html.Hidden( "CommissionIds" )
+       <div class="editor-label">
+            @Html.LabelFor(x => x.DefenseDate)
+        </div>
+      <div class="editor-field">
+          @Html.TextBoxFor(m => m.DefenseDate,new { @class = "defenceDatePicker" })
+      </div>
+    
+       <p>
+            <input type="submit" value="Съхрани" id="CreateCommissionSubmitButton" />
+        </p>
+     </fieldset>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/themes/base/css")
+    
+    <script type="text/javascript">
+
+        // Array Remove - By John Resig (MIT Licensed)
+        Array.prototype.remove = function (from, to) {
+            var rest = this.slice((to || from) + 1 || this.length);
+            this.length = from < 0 ? this.length + from : from;
+            return this.push.apply(this, rest);
+        };
+
+       // $("#CommisionChairman").click( function(){
+            //$('#CommissionDropDown').add('#CommissionListBox').children('option')
+       // })
+        selectedPeopleIds = [];
+        $('#addCommission').click(function () {
+
+            var personId = $('#CommissionDropDown').val();
+            var chairmanId = $("#CommissionChairman").val();
+            if (!isEmpty(personId)) {
+                if (!isEmpty(chairmanId) && chairmanId == personId) {
+                    alert("Не може да има дублиращи полета")
+                    return;
+                }
+                if (selectedPeopleIds.indexOf(personId) == -1) {
+                    selectedPeopleIds.push(personId);
+                    var text = $('#CommissionDropDown option:selected').text();
+                    $('#CommissionListBox').append('<option value="' + personId + '"> ' + text + '</option>');
+                }
+            }
+        });
+        function isEmpty(str) {
+            return (!str || 0 === str.length);
+        }
+
+        $('#deleteCommission').click(function () {
+            var personId = $('#CommissionDropDown option:selected').val();
+            var personPosition = selectedPeopleIds.indexOf(personId);
+            if ( personPosition != -1 )
+            {
+                selectedPeopleIds.remove( personPosition, personPosition );
+            }
+            $('#CommissionListBox option:selected').remove();
+        })
+
+        $("#CommissionChairman").change(function () {
+            var chairmanId = $("#CommissionChairman").val();
+            if ($.inArray(chairmanId, selectedPeopleIds) > -1) {
+                $('#CommissionChairman').val("--избери--")
+            }
+        })
+
+        $('#CreateCommissionSubmitButton').click(function () {
+            $('#CommissionIds').val( selectedPeopleIds.join(';') );
+        })
+
+    </script>
+
+    <script type="text/javascript">
+        $(function () { $(".defenceDatePicker").datepicker() })
+    </script>
+
+}

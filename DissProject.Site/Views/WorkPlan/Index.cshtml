@@ -1,0 +1,70 @@
+﻿@model IEnumerable<DissProject.Models.YearWorkPlanApplications>
+
+@{
+    ViewBag.Title = "Работен плас";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Създаване на нов работен план", "Create", null, new { @class="button-med"})
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PlanYear)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FormOfConduct)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FormOfReport)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DueDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PlanYear)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FormOfConduct)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FormOfReport)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DueDate)
+        </td>
+        <td>
+            @Html.ActionLink("Редактирай", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Експортирай", "ExportSingle", new { id=item.Id }, new { id="export-single"}) |
+            @Html.ActionLink("Изтрий", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
+ @using (Html.BeginForm("ExportData", "WorkPlan", FormMethod.Post, new { enctype = "multipart/form-data" }))
+         {
+        <table>
+         <tr><td></td><td><input class="button-med" type="submit" name="Export" id="Export" value="Export"/></td></tr>
+        
+        </table>
+         }

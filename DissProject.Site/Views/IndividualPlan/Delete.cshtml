@@ -1,0 +1,47 @@
+﻿@model DissProject.Models.IndividualPlan
+
+@{
+    ViewBag.Title = "Изтриване на работен план";
+}
+
+@*<h2>Delete</h2>*@
+
+<h3>Сигурни ли сте че искате да изтриете този работен план?</h3>
+<fieldset>
+    <legend>IndividualPlan</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.GratuationDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.GratuationDate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Specialty)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Specialty)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.PhdThesisTitle)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PhdThesisTitle)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FacultyProtocol)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FacultyProtocol)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Обратно", "Index")
+    </p>
+}

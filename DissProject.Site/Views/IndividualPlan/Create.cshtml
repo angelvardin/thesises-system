@@ -1,0 +1,62 @@
+﻿@model DissProject.Models.IndividualPlan
+@{
+    ViewBag.Title = "Създаване на Работел план";
+}
+
+@*<h2>Create</h2>*@
+
+@using (Html.BeginForm()) {
+    @*    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false)
+
+    *@
+<fieldset>
+        <legend>IndividualPlan</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.GratuationDate)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(m => m.GratuationDate, new { id = "date"} )
+            @Html.ValidationMessageFor(model => model.GratuationDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Specialty)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Specialty)
+            @Html.ValidationMessageFor(model => model.Specialty)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PhdThesisTitle)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PhdThesisTitle)
+            @Html.ValidationMessageFor(model => model.PhdThesisTitle)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FacultyProtocol)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FacultyProtocol)
+            @Html.ValidationMessageFor(model => model.FacultyProtocol)
+        </div>
+
+        <p>
+            <input type="submit" value="Създай" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Обратно", "Index")
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $('#date').datepicker({ dateFormat: "dd/mm/yy" });
+        </script>
+}

@@ -1,0 +1,110 @@
+﻿@model DissProject.Site.Models.EditTeacherInfo
+
+@{
+    ViewBag.Title = "Редактиране";
+    var Edtitles = new List<SelectListItem>();
+    Edtitles.Add(new SelectListItem() { Text = "Научен работник", Value = "Научен работник" });
+    Edtitles.Add(new SelectListItem() { Text = "Асистент", Value = "Асистент" });
+    Edtitles.Add(new SelectListItem() { Text = "Главен Асистент", Value = "Главен Асистент" });
+    Edtitles.Add(new SelectListItem() { Text = "Доцент", Value = "Доцент" });
+    Edtitles.Add(new SelectListItem() { Text = "Професор", Value = "Професор" });
+    Edtitles.Add(new SelectListItem() { Text = "Академик", Value = "Академик" });
+    Edtitles.Add(new SelectListItem() { Text = "Член Кореспондент", Value = "Член Кореспондент" });
+
+    
+    //title.Remove(new SelectListItem() { Text = Model.Title, Value = Model.Title });
+    
+}
+
+<h2>Редактиране на персонална информация</h2>
+
+@using (Html.BeginForm("EditTeacherInfo", "UserInfo", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Редактиране</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FirstName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FirstName)
+            @Html.ValidationMessageFor(model => model.FirstName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SecondName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SecondName)
+            @Html.ValidationMessageFor(model => model.SecondName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastName)
+            @Html.ValidationMessageFor(model => model.LastName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PhoneNumber)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PhoneNumber)
+            @Html.ValidationMessageFor(model => model.PhoneNumber)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Address)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Address)
+            @Html.ValidationMessageFor(model => model.Address)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TeacherTitle)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(m => m.TeacherTitle,Edtitles)
+            @Html.ValidationMessageFor(model => model.TeacherTitle)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Department)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(x => x.Department,ViewBag.Departments as SelectList,"----Избери----")
+            @Html.ValidationMessageFor(model => model.Department)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DateOfApproval)
+        </div>
+        <div class="editor-field">
+           
+            @Html.ValidationMessageFor(model => model.DateOfApproval)
+        </div>
+
+        <p>
+            <input type="submit" value="Съхрани" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+ 
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/themes/base/css")
+
+
+}

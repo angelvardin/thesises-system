@@ -1,0 +1,126 @@
+﻿@model DissProject.Models.Thesis
+
+@using DissProject.Site
+@using DissProject.Models
+
+@{
+    ViewBag.Title = "Детайли";
+    Layout = "~/Areas/Teachers/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Детайли за дипломната работа</h2>
+<br />
+
+    <fieldset class="withBorder">
+        <legend>Дипломна работа</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Application.Subject)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Application.Subject, new { disabled = "disabled", @readonly = "readonly" })
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Application.Annotation)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Application.Annotation, new { disabled = "disabled", @readonly = "readonly" })
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Application.Purpose)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Application.Purpose, new { disabled = "disabled", @readonly = "readonly" })
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Application.Tasks)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Application.Tasks, new { disabled = "disabled", @readonly = "readonly" })
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Application.Constraints)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Application.Constraints, new { disabled = "disabled", @readonly = "readonly" })
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Application.Deadline)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Application.Deadline, new { disabled = "disabled", @readonly = "readonly" })
+        </div>
+    </fieldset>
+    
+    @{ var currentPersonId = DissProject.DISSContext.Current.CurrentPerson.PersonId;
+       List<int> consultantsIds = new List<int>();
+       foreach (Person p in Model.Application.Consultants)
+       {
+           consultantsIds.Add(p.PersonId); 
+       } 
+      }
+        
+
+    @if (consultantsIds.Contains(currentPersonId))
+    {
+        <fieldset class="withBorder">
+            <legend> Рецензия </legend>
+            @if (Model.Evaluation == null)
+            {
+                <span> Все още не сте рeцензирали тази работа </span>
+                using( Html.BeginForm( "AddThesisEvaluation", "ThesisisInfo", FormMethod.Get ) )
+                {
+                    <input type="hidden" name="studentId" value="@Model.Student.PersonId" />
+                    <button> Добави </button>
+                }
+           }
+           else
+           {
+                using( Html.BeginForm( "ThesisEvaluationDetails", "ThesisisInfo", FormMethod.Get ) )
+                {
+                    <input type="hidden" name="studentId" value="@Model.Student.PersonId" />
+                    var buttonText = Model.Evaluation == null ? "Добави" : "Преглед";
+                    <button> Преглед </button>
+                }
+           }
+        </fieldset>
+    }
+    
+    @if (Model.Application.ManagerId == currentPersonId)
+    {
+        if (Model.SubjectApplicationStatus == ThesisSubjectStatus.PartiallyApproved || Model.SubjectApplicationStatus == ThesisSubjectStatus.Aproved)
+        { 
+        <fieldset class="withBorder">
+            <legend> Комисия </legend>
+            @if (Model.EvaluationCommittee.Count == 0)
+            {
+                <span> Все още не сте назначили комисия </span>
+            }
+            @using (Html.BeginForm("AddEvaluationCommission", "ThesisisInfo", FormMethod.Get))
+    {
+                <input type="hidden" name="thesisId" value="@Model.Id" />
+                var buttonText = Model.EvaluationCommittee.Count == 0 ? "Добави" : "Промени";
+                <button> @buttonText </button>
+            }
+        </fieldset>
+        }
+    }
+
+    <p>
+        <input type='button' onclick='back()' value='Назад' class='delete-button'/>
+    </p>
+
+@section Scripts {
+    <script title="text/javascript">
+        function back() {
+            window.location.href = "@Url.Action("Index")";
+       }
+    </script>
+}
+
+

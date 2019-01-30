@@ -1,0 +1,61 @@
+﻿@model DissProject.Models.InternshipApplication
+
+@{
+    ViewBag.Title = "Предложение за стаж";
+    }
+
+@using DissProject.Models
+@*<hgroup class="title">
+    <h1>"Предложение за стаж</h1>
+</hgroup>*@
+
+@using (Html.BeginForm("AddInternship", "Internship", FormMethod.Post, new {@id="post-form"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>Форма за стаж</legend>
+            
+               <div class="editor-label">
+                    @Html.LabelFor(m => m.InternshipOffer)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(m => m.InternshipOffer)
+                    @Html.ValidationMessageFor(m => m.InternshipOffer)
+                </div>
+     
+
+                <div class="editor-label">
+                    @Html.LabelFor(m => m.Anotation)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(m => m.Anotation)
+                    @Html.ValidationMessageFor(m => m.Anotation)
+                </div>
+
+
+                <div class="editor-label">
+                    @Html.LabelFor(m => m.Purpose)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(m => m.Purpose)
+                    @Html.ValidationMessageFor(m => m.Purpose)
+                </div>
+                <div class="editor-label">
+                     @Html.Label( "Консултант" )
+               </div>
+              <div class="editor-field">
+                     @Html.DropDownList( "ConsultantId", (IEnumerable<SelectListItem>)( ViewBag.People ), "--избери--")
+              </div> 
+                
+               @Html.Hidden( "ConsultantId" )
+
+        <input type="submit" value="Добави стаж" />
+    </fieldset>
+    
+    
+}
+
+
+

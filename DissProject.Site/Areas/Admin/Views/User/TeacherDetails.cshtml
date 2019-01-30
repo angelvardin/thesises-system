@@ -1,0 +1,73 @@
+﻿@model DissProject.Site.Models.EditTeacherInfo
+
+@{
+    ViewBag.Title = "Преподаватели: информация";
+    //ViewBag.Message = "Преподаватели: информация.";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Детайли за преподавател</h2>
+
+<fieldset>
+    <legend>Детайли</legend>
+    <br />
+    <div class="display-label">
+         <b> @Html.DisplayNameFor(model => model.FirstName)</b>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FirstName)
+    </div>
+    <br />
+    <div class="display-label">
+         <b> @Html.DisplayNameFor(model => model.SecondName)</b>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.SecondName)
+    </div>
+    <br />
+    <div class="display-label">
+         <b>@Html.DisplayNameFor(model => model.LastName)</b> 
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LastName)
+    </div>
+    <br />
+    <div class="display-label">
+         <b>@Html.DisplayNameFor(model => model.PhoneNumber)</b> 
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PhoneNumber)
+    </div>
+    <br />
+    <div class="display-label">
+         <b> @Html.DisplayNameFor(model => model.Address)</b>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Address)
+    </div>
+    <br />
+    <div class="display-label">
+         <b> @Html.DisplayNameFor(model => model.TeacherTitle)</b>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TeacherTitle)
+    </div>
+    <br />
+    <div class="display-label">
+         <b>@Html.DisplayNameFor(model => model.Department)</b> 
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Department)
+    </div>
+    <br />
+    <div class="display-label">
+         <b> @Html.DisplayNameFor(model => model.DateOfApproval)</b>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DateOfApproval)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Към неодобрените потребители", "Index") |
+    @Html.ActionLink("Към всички потребители", "AllUsers")
+</p>

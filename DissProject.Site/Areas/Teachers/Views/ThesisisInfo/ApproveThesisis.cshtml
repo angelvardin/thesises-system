@@ -1,0 +1,24 @@
+﻿@model IQueryable<DissProject.Site.Areas.Teachers.Models.NewThesisis>
+
+
+@{
+    ViewBag.Title = "Заявки за дипломни работи";
+    Layout = "~/Areas/Teachers/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Заявки за дипломни работи</h2>
+
+<div id="success">
+
+</div>
+@Html.ValidationSummary()
+<br />
+
+
+<input type="button" id="saveChanges" class="button-style" value="Съхрани промените" />
+ <input type="button" id="undo" class="button-style" value="Назад" />
+ <input type="button" id="redo" class="button-style" value="Напред" />
+
+@section Scripts {
+  
+}

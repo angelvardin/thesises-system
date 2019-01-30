@@ -1,0 +1,164 @@
+﻿@model DissProject.Models.ThesisApplication
+
+
+
+<link href="@Href("~/Content/ThesisPage.css")" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Предложение за задаване на дипломна работа";
+}
+
+@using (Html.BeginForm("Create", "Thesis", FormMethod.Post ) )
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    
+    <fieldset>
+        <legend>ThesisApplication</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Subject)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Subject)
+            @Html.ValidationMessageFor(model => model.Subject)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Annotation)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Annotation)
+            @Html.ValidationMessageFor(model => model.Annotation)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Purpose)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Purpose)
+            @Html.ValidationMessageFor(model => model.Purpose)
+        </div>
+
+        <div class="editor-label">
+            @Html.DisplayNameFor( x=>x.Manager )
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(x => x.ManagerId, (IEnumerable<SelectListItem>)(ViewBag.Teachers))
+        </div>
+
+
+        <div class="editor-label">
+            @Html.Label("Консултанти")
+        </div>
+        <div class="editor-field">
+            <table id="ConsultantsTable">
+                <tr>
+                    <td>
+                        @Html.DropDownList("Consultants", (IEnumerable<SelectListItem>)(ViewBag.People), "--избери--", new { id = "ConsultantsDropDown" })
+                    </td>
+                    <td>
+                        <button type="button" id="addConsultantButton" > Add Consultant </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.ListBox("ChosenConsultants", new List<SelectListItem>(), new { id = "ConsultantsListBox" })
+                    </td>
+                    <td>
+                        <button type="button" id="deleteConsultant" > Delete Consultant </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        @Html.Hidden( "ConsultantsIds" )
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Tasks)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Tasks)
+            @Html.ValidationMessageFor(model => model.Tasks)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Constraints)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Constraints)
+            @Html.ValidationMessageFor(model => model.Constraints)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Deadline)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(m => m.Deadline, new { id = "deadlinePicker" })
+            @Html.ValidationMessageFor(model => model.Deadline)
+        </div>
+        <p>
+            @*@if( ViewBag.IsEditOperation == true )
+            {
+                <input type="submit" value="EditThesisApplication" id="EditThesisSubmitButton" />
+            }
+            else
+            {
+                <input type="submit" value="Create" id="CreateThesisSubmitButton" />
+            }*@
+            <input type="submit" value="Create" id="CreateThesisSubmitButton" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/themes/base/css")
+    
+    <script type="text/javascript">
+        // Array Remove - By John Resig (MIT Licensed)
+        Array.prototype.remove = function (from, to) {
+            var rest = this.slice((to || from) + 1 || this.length);
+            this.length = from < 0 ? this.length + from : from;
+            return this.push.apply(this, rest);
+        };
+
+        selectedPeopleIds = [];
+        $('#addConsultantButton').click(function () {
+            var personId = $('#ConsultantsDropDown').val();
+            if (personId == "") {
+                return;
+            }
+            if (selectedPeopleIds.indexOf(personId) == -1) {
+                selectedPeopleIds.push(personId);
+                var text = $('#ConsultantsDropDown option:selected').text();
+                $('#ConsultantsListBox').append('<option value="' + personId + '"> ' + text + '</option>');
+            }
+        });
+
+        $('#deleteConsultant').click(function () {
+            var personId = $('#ConsultantsDropDown option:selected').val();
+            var personPosition = selectedPeopleIds.indexOf(personId);
+            if ( personPosition != -1 )
+            {
+                selectedPeopleIds.remove( personPosition, personPosition );
+            }
+            $('#ConsultantsListBox option:selected').remove();
+        })
+
+        $('#CreateThesisSubmitButton').click(function () {
+            $('#ConsultantsIds').val( selectedPeopleIds.join(';') );
+        })
+
+    </script>
+
+    <script type="text/javascript">
+        $(function() { $("#deadlinePicker").datepicker() } )
+    </script>
+
+}

@@ -1,0 +1,218 @@
+﻿@{
+    ViewBag.Title = "Справки";
+}
+
+<div>
+    <span>Моля избрете желания вид справка:</span>
+    <br />
+    <input type="radio" name="inquiry-type" value="0" checked>Справка за защитили докторанти от дата до дата
+    <br />
+    <input type="radio" name="inquiry-type" value="1">Справка за текущи докторанти от дата до дата
+    <br />
+    <input type="radio" name="inquiry-type" value="2">Справка за защитили докторанти с даден научен ръковоител от дата до дата
+    <br />
+    <input type="radio" name="inquiry-type" value="3">Справка за текущи докторанти с даден научен ръководител от дата до дата
+    <br />
+</div>
+<div>
+    <span>От</span>
+    <div style="display:inline;">
+        <input id="from-date" type="text" />
+    </div>
+    <span> до </span>
+    <div style="display:inline;">
+        <input id="to-date" type="text" />
+    </div>
+    <div style="display:inline;">
+        <select id="phd-manager" style="display:none;">
+            <option value="-1" selected>Изберете научен ръководител</option>
+        </select>
+    </div>
+    <br />
+    <input id="search" type="button" value="Търси" />
+
+        <table id="list-of-done-phd" style="width: 100%; border: 1px; border-style: groove; ">
+        <tr id="table-header-row" style="border-bottom: groove;">
+            <th style="width: 15%; border-right: 1px;">Дата на защита</th>
+            <th style="width: 80%;">Име</th>
+        </tr>
+    </table>
+
+    <table id="list-of-current-phd" style="width: 100%; border: 1px; border-style: groove; display: none;">
+        <tr id="table-header-row" style="border-bottom: groove;">
+            <th style="width: 15%; border-right: 1px;">Дата на започване</th>
+            <th style="width: 80%">Име</th>
+        </tr>
+    </table>
+
+    <table id="list-of-done-phd-with-manager" style="width: 100%; border: 1px; border-style: groove; display: none;">
+        <tr id="table-header-row" style="border-bottom: groove;">
+            <th style="width: 15%; border-right: 1px;">Дата на защита</th>
+            <th style="width: 40%; border-right: 1px;">Име</th>
+            <th style="width: 40%; ">Научен ръководител</th>
+        </tr>
+    </table>
+
+    <table id="list-of-current-phd-with-manager" style="width: 100%; border: 1px; border-style: groove; display: none;">
+        <tr id="table-header-row" style="border-bottom: groove;">
+            <th style="width: 15%; border-right: 1px;">Дата на започване</th>
+            <th style="width: 40%; border-right: 1px;">Име</th>
+            <th style="width: 40%">Научен ръководител</th>
+        </tr>
+    </table>
+
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#from-date").datepicker({
+            changeMonth: true,
+            numberOfMonths: 1,
+            dateFormat: 'dd.mm.yy',
+            onClose: function (selectedDate) {
+                $("#to-date").datepicker("option", "minDate", selectedDate);
+            }
+        });
+        $("#to-date").datepicker({
+            defaultDate: "+1w",
+            changeMonth: true,
+            numberOfMonths: 1,
+            dateFormat: 'dd.mm.yy',
+            onClose: function (selectedDate) {
+                $("#from-date").datepicker("option", "maxDate", selectedDate);
+            }
+        });
+    });
+
+    function populateTeachers() {
+        $.ajax({
+            type: 'POST',
+            url: "/PhdStudent/GetAllTeachers",
+            success: function (data) {
+                $.each(data, function(i, el){
+                    $('#phd-manager').append(new Option(el.Name, el.Id));
+                    });
+            },
+            error: function () {
+                alert('Възникна грешка.');
+            }
+
+        });
+    };
+
+    $(document).ready(function () {
+        populateTeachers();
+
+        $('#search').on('click', function () {
+            var fromDate = $('#from-date').val();
+            var toDate = $('#to-date').val();
+            var statement = parseInt($("input[name='inquiry-type']:checked").val(), 10);
+            var teacherId = -1;
+            var url = '';
+
+            switch (statement) {
+                case 0: {
+                    url = '/PhdStudent/GetAllGraduatePhdsInRange';
+                    break;
+                }
+                case 1: {
+                    url = '/PhdStudent/GetAllNotGraduatePhdsInRange';
+                    break;
+                }
+                case 2: {
+                    url = '/PhdStudent/GetAllGraduatePhdsInRangeWithManager';
+                    break;
+                }
+                case 3: {
+                    url = '/PhdStudent/GetAllNotGraduatePhdsInRangeWithManager';
+                    break;
+                }
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: { 'fromDate': fromDate, 'toDate': toDate, 'teacherId': teacherId },
+                success: function (data) {
+                    var html = '';
+                    
+
+                    switch(statement){
+                        case 0: {
+                            $.each(data, function (i, v) {
+                                html = html + "<tr><td>" + v.Date + "</td><td>" + v.Name + "</td></tr>";
+                            });
+                            $('#list-of-done-phd').append(html);
+                        }
+                        case 1: {
+                            $.each(data, function (i, v) {
+                                html = html + "<tr><td>" + v.Date + "</td><td>" + v.Name + "</td></tr>";
+                            });
+                            $('#list-of-current-phd').append(html);
+                            break;
+                        }
+                        case 2: {
+                            $.each(data, function (i, v) {
+                                html = html + "<tr><td>" + v.Date + "</td><td>" + v.Name + "</td><td>" + v.TeacherName + "</td></tr>";
+                            });
+                            $('#list-of-done-phd-with-manager').append(html);
+                            break;
+                        }
+                        case 3: {
+                            $.each(data, function (i, v) {
+                                html = html + "<tr><td>" + v.Date + "</td><td>" + v.Name + "</td><td>" + v.TeacherName + "</td></tr>";
+                            });
+                            $('#list-of-current-phd-with-manager').append(html);
+                            break;
+                        }
+                    }
+                },
+                error: function () {
+                    alert('Възникна грешка.');
+                }
+            })
+        });
+
+        $("input[name='inquiry-type']:radio").on('change', function () {
+            var statement = parseInt($(this).val(), 10);
+
+            switch (statement) {
+                case 0: {
+                    $('#list-of-done-phd').show();
+                    $('#list-of-current-phd').hide();
+                    $('#list-of-done-phd-with-manager').hide();
+                    $('#list-of-current-phd-with-manager').hide();
+                    $('#phd-manager').hide();
+                    return;
+                }
+                case 1: {
+                    $('#list-of-done-phd').hide();
+                    $('#list-of-current-phd').show();
+                    $('#list-of-done-phd-with-manager').hide();
+                    $('#list-of-current-phd-with-manager').hide();
+                    $('#phd-manager').hide();
+                    return;
+                }
+                case 2: {
+                    $('#list-of-done-phd').hide();
+                    $('#list-of-current-phd').hide();
+                    $('#list-of-done-phd-with-manager').show();
+                    $('#list-of-current-phd-with-manager').hide();
+                    $('#phd-manager').show();
+                    return;
+                }
+                case 3: {
+                    $('#list-of-done-phd').hide();
+                    $('#list-of-current-phd').hide();
+                    $('#list-of-done-phd-with-manager').hide();
+                    $('#list-of-current-phd-with-manager').show();
+                    $('#phd-manager').show();
+                    return;
+                }
+                default: {
+                    throw "Exception error!";
+                }
+            }
+        });
+    });
+</script>

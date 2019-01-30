@@ -1,0 +1,23 @@
+﻿@model IQueryable<DissProject.Site.Areas.Teachers.Models.ThesisisAssignedToMe>
+
+
+@{
+    ViewBag.Title = "Одобри нови дипломни работи";
+    Layout = "~/Areas/Teachers/Views/Shared/_Layout.cshtml";
+}
+
+<div id="success">
+
+</div>
+
+
+
+
+@section Scripts {
+   <script type="text/javascript">
+       function details(UserName) {
+           $("#success").empty();
+           window.location.href = "@Url.Action("Details")" + "/?userId=" + UserName;
+       }
+    </script>
+}

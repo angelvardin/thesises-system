@@ -1,0 +1,66 @@
+﻿@model DissProject.Site.Models.PhdStudentInfo
+
+
+@{
+    var formOfEducation = new List<SelectListItem>();
+    formOfEducation.Add(new SelectListItem() { Text = "Редовна", Value = "FullTimeStudy" });
+    formOfEducation.Add(new SelectListItem() { Text = "Задочна", Value = "PartTimeStudy" });
+    formOfEducation.Add(new SelectListItem() { Text = "Индивидуална", Value = "IndividualFormOfStudy" });
+
+}
+
+
+    <fieldset>
+        <legend>PhdStudent</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Protocol)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Protocol)
+            @Html.ValidationMessageFor(model => model.Protocol)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Code)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Code)
+            @Html.ValidationMessageFor(model => model.Code)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DateOfApproval)
+        </div>
+        <div class="editor-field">
+           @* @Html.EditorFor(model => model.DateOfApproval)*@
+            @Html.ValidationMessageFor(model => model.DateOfApproval)
+        </div>
+
+            <div class="editor-label"> 
+                @Html.LabelFor(model => model.SubjectOfStudies)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.SubjectOfStudies)
+                @Html.ValidationMessageFor(m => m.SubjectOfStudies)
+            </div>
+
+            <div class="editor-label"> 
+                @Html.LabelFor(model => model.FormOfEducation)
+            </div>
+             <div class="editor-field">
+                @Html.DropDownListFor(m => m.FormOfEducation,formOfEducation,"----Select----")
+                @Html.ValidationMessageFor(m => m.FormOfEducation)
+            </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Department)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(x => x.Department,(IEnumerable<SelectListItem>)ViewBag.Departments,"----Select----")
+            @Html.ValidationMessageFor(model => model.Department)
+        </div>
+    </fieldset>
+
+
+
+

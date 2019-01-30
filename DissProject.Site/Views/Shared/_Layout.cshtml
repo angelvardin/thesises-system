@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        @*<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>*@
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/css")
+        @Styles.Render("~/Content/themes/base/css")
+        @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryui")
+
+    </head>
+    <body>
+        <header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p class="site-title">
+                         @if(Roles.IsUserInRole(User.Identity.Name, "admin")){
+                             @Html.ActionLink("Администраторски панел", "Index", "Home")
+                         }else{
+                            @Html.ActionLink("ФМИ", "Index", "Home")
+                         }
+                        
+                    </p>
+                </div>
+                <div class="float-right">
+                    <section id="login">
+                        @Html.Partial("_LoginPartial")
+                    </section>
+                    <nav id="dropnavigation">
+                        <ul id="menu">
+                            <li> </li>
+                            @if(Roles.IsUserInRole(User.Identity.Name, "admin")){
+                            <li>@Html.ActionLink("Одобри", "Index", "Admin/User")</li>
+                            <li>@Html.ActionLink("Потребители", "AllUsers", "Admin/User")</li>
+                            <li>@Html.ActionLink("Катедри","Index","Admin/Department")</li>
+                            }
+                            @if(Roles.IsUserInRole(User.Identity.Name, "Student")){
+                                <li>@Html.ActionLink("Начало", "HomeStudent", "Home")</li>
+                                <li>@Html.ActionLink("Дипломна работа", "Index", "Thesis")</li>
+                                <li>@Html.ActionLink("Стаж", "Index", "Internship")</li>
+                                <li>@Html.ActionLink("Лични Данни", "Edit", "UserInfo")</li>
+                            }
+                             @if(Roles.IsUserInRole(User.Identity.Name, "Teacher")){
+                                <li>@Html.ActionLink("Справки", "Index", "ThesisisInfo", new { Area = "Teachers" }, new{})</li>
+                                <li>@Html.ActionLink("Дипломни работи","ApproveThesisis","ThesisisInfo", new { Area = "Teachers" }, new{})</li> 
+                               <li>@Html.ActionLink("Лични Данни","Edit","TeacherPersonalInformation", new { Area = "Teachers" }, new{})</li> 
+                            }
+                             @if(Roles.IsUserInRole(User.Identity.Name, "PhdStudent")){
+                                <li>@Html.ActionLink("Начало", "HomePhdStudent", "Home")</li>
+                                <li>@Html.ActionLink("Докторантура", "Index", "PhdStudent")</li>
+                                <li>@Html.ActionLink("Справка", "Inquiries", "PhdStudent")</li>
+                                <li>@Html.ActionLink("Лични Данни", "Edit", "UserInfo")</li>
+                            }
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <div id="body">
+            <section class="featured">
+                <div class="content-wrapper">
+                    <hgroup class="title">
+                        <h1>@ViewBag.Title.</h1>
+                        <h2>@ViewBag.Message</h2>
+                    </hgroup>
+                </div>
+            </section>
+
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+        </div>
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.ToString("d/M/yyyy") г. - Ангел, Благовеста, Георги, Димитър, Мартин, Цветелина</p>
+                </div>
+            </div>
+        </footer>
+
+
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

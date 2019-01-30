@@ -1,0 +1,112 @@
+﻿@model DissProject.Models.Internship
+
+@{
+    Layout = "~/Areas/Teachers/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Одобряване на стаж";
+    ViewBag.Evaluated = false;
+}
+@using DissProject.Site;
+
+<h2>@ViewBag.Title</h2>
+
+
+@using (Html.BeginForm("AcceptInternship", "InternshipInfo", FormMethod.Post, new { @id = "post-form" }))
+{
+    
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>Стаж за одобряване</legend>
+
+        @if (Model == null || Model.InternshipApplication == null)
+        {
+            <p> Нямате заявени стажове </p>
+        }
+        else
+        {
+     
+
+        <div style="vertical-align: top; display: inline-block;">
+        <table>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Intern)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Intern.FirstName)
+                    @Html.DisplayFor(model => model.Intern.LastName)
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.InternshipStatus)
+                </td>
+                <td>
+                    @Html.Label(Utilities.InternshipStatusString(Model.InternshipStatus))
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                     @Html.DisplayNameFor(model => model.InternshipApplication.InternshipOffer)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.InternshipApplication.InternshipOffer)
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                     @Html.DisplayNameFor(model => model.InternshipApplication.Anotation)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.InternshipApplication.Anotation)
+                </td>
+                <td>
+            </tr>
+            <tr>
+                <td>
+                     @Html.DisplayNameFor(model => model.InternshipApplication.Purpose)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.InternshipApplication.Purpose)
+                </td>
+                <td>
+                </td>
+            </tr>
+            @if (Model.Grade <=6 && Model.Grade >= 2)
+            {
+                <tr>
+                <td>
+                     @Html.DisplayNameFor(model => model.Grade)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Grade)
+                </td>
+                <td>
+                </td>
+            </tr>
+            }
+        </table>
+            @Html.HiddenFor( m =>m.Id )
+        </div>
+            if (Model.InternshipStatus == DissProject.Models.InternshipStatus.Applied)
+            {
+                <button class="btn btn-inverse" title="Одобри стаж" type="submit">Одобри стаж</button>
+            }
+
+            if (Model.InternshipStatus == DissProject.Models.InternshipStatus.Evaluated)
+            {
+                ViewBag.Evaluated = true;
+                <button class="btn btn-inverse" title="Одобри оценка" type="submit">Одобри Оценка</button>
+            }
+                
+       }
+    </fieldset>
+    
+}

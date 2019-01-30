@@ -1,0 +1,127 @@
+﻿@model DissProject.Site.Models.EditPhdStudentInfo
+
+
+
+@{
+    ViewBag.Title = "Редактиране";
+    var formOfEducation = new List<SelectListItem>();
+    formOfEducation.Add(new SelectListItem() { Text = "Редовна", Value = "FullTimeStudy" });
+    formOfEducation.Add(new SelectListItem() { Text = "Задочна", Value = "PartTimeStudy" });
+    formOfEducation.Add(new SelectListItem() { Text = "Индивидуална", Value = "IndividualFormOfStudy" });
+}
+
+<h2>Редактиране на персонална информация</h2>
+
+@using (Html.BeginForm("EditPhdStudentInfo", "UserInfo", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>EditPhdStudentInfo</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FirstName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FirstName)
+            @Html.ValidationMessageFor(model => model.FirstName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SecondName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SecondName)
+            @Html.ValidationMessageFor(model => model.SecondName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastName)
+            @Html.ValidationMessageFor(model => model.LastName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PhoneNumber)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PhoneNumber)
+            @Html.ValidationMessageFor(model => model.PhoneNumber)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Address)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Address)
+            @Html.ValidationMessageFor(model => model.Address)
+        </div>
+
+         <div class="editor-label">
+            @Html.LabelFor(model => model.FormOfEducation)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.FormOfEducation,formOfEducation,"----Избери-----")
+            @Html.ValidationMessageFor(model => model.Protocol)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Protocol)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Protocol)
+            @Html.ValidationMessageFor(model => model.Protocol)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Code)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Code)
+            @Html.ValidationMessageFor(model => model.Code)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DateOfApproval)
+        </div>
+        <div class="editor-field">
+          
+            @Html.ValidationMessageFor(model => model.DateOfApproval)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SubjectOfStudies)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SubjectOfStudies)
+            @Html.ValidationMessageFor(model => model.SubjectOfStudies)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Department)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(x => x.Department,ViewBag.Departments as SelectList,"----Избери----")
+            @Html.ValidationMessageFor(model => model.Department)
+        </div>
+
+        <p>
+            <input type="submit" value="Запази" />
+        </p>
+    </fieldset>
+}
+
+<div>
+     @Html.ActionLink("Назад", "Index","Home")
+</div>
+
+@section Scripts {
+    
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/themes/base/css")
+
+}

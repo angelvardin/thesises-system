@@ -1,0 +1,289 @@
+﻿@model DissProject.Models.Thesis
+
+@{
+    ViewBag.Title = "Информация относно дипломна работа";
+}
+<link href="@Href("~/Content/ThesisPage.css")" rel="stylesheet" type="text/css" />
+@using DissProject.Site;
+
+<h2>Дипломна Работа</h2>
+
+<fieldset>
+    <legend>Thesis</legend>
+
+    @if (Model == null || Model.Application == null)
+    {
+        <p> Не сте попълнили заявление за дипломна работа </p>
+        using (Html.BeginForm("Create", "Thesis", FormMethod.Get))
+        {
+            <button class="btn btn-inverse" title="Log out" type="submit">Ново Заявление</button>
+        }
+    }
+    else
+    {
+        <h3>Заявление</h3>
+        
+        <div style="vertical-align: top; display: inline-block;">
+        <table>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.SubjectApplicationStatus)
+                </td>
+                <td>
+                    @Html.Label(Utilities.ThesisSubjectStatusString(Model.SubjectApplicationStatus))  
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                     @Html.DisplayNameFor(model => model.Application.Subject)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Application.Subject)
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Application.Purpose)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Application.Purpose)
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Application.Tasks)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Application.Tasks)
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Application.Annotation)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Application.Annotation)
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Application.Manager)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Application.Manager.Names)
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Application.Consultants)
+                </td>
+                <td>
+                    @{
+                        string html = "";
+                        if (Model.Application.Consultants != null)
+                        {
+                            var consultants = Model.Application.Consultants;
+                            for (int i = 0; i < consultants.Count; ++i)
+                            {
+                                html += consultants.ElementAt(i).Names;
+                                html += "\n";
+                            }
+                        }
+                      }
+                    <pre>@html</pre>
+                </td>
+                <td>
+                </td>
+            </tr>
+        </table>
+    </div>
+     
+   @*           
+    if ( Model == null
+        || Model.SubjectApplicationStatus == DissProject.Models.ThesisSubjectStatus.Waiting )
+    {
+        using (Html.BeginForm("ShowEditThesisApplication", "Thesis", FormMethod.Get))
+        {
+            <input type="hidden" name="studentId" value ="@Model.Student.PersonId" />
+            <button class="btn btn-inverse" title="Log out" type="submit">Редактирай</button>
+        }
+    }*@
+
+    if (Model != null && Model.Application != null)
+    {
+        using ( Html.BeginForm("GetThesisApplicationDocument", "Thesis", FormMethod.Post ) )
+        {
+            <button class="btn btn-inverse" title="Log out" type="submit"> Свали заявлението </button>
+        }
+    }
+
+    var applicationApproved = Model.IsApplicationApproved;
+
+    <table style="margin-bottom: 20px">
+        <tr>
+        <td>
+            @Html.DisplayNameFor(model => model.DefenseDate)
+        </td>
+        <td>
+            @if (applicationApproved)
+            {
+            <div class="display-field">
+                @Html.DisplayFor(model => model.DefenseDate)
+            </div> 
+            }
+            else
+            {
+                <span>Все още нямате назначена дата за дипломна защита</span>
+            }
+        </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Grade)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Grade)
+            </td>
+        </tr>
+    </table>    
+
+    <div class="DownloadWrapper">
+        <h3> Дипломна Работа: </h3>
+        @{ 
+            String text;
+            if (ViewBag.ThesisFile == null)
+            {
+                text = "Нямате качен файл";
+                <span class="DownloadFileName"> @text </span>
+            }
+            else
+            {
+                text = ViewBag.ThesisFile.Filename;
+                <span class="DownloadFileName"> @Html.ActionLink(text, "DownloadDocument", "Thesis", new { documentId = ViewBag.ThesisFile.Id }, new { }) </span>
+            }
+        }
+        <div id="ThesisUploader">
+            <noscript>			
+			    <p>Please enable JavaScript to use file uploader.</p>
+			    <!-- or put a simple form for upload here -->
+		    </noscript>         
+        </div>
+    </div>
+        
+    <div class="DownloadWrapper">
+        <h3> Анотация на Български: </h3>
+        @{ 
+            if (ViewBag.AnnotationBulgarian == null)
+            {
+                text = "Нямате качен файл";
+                <span class="DownloadFileName"> @text </span>
+            }
+            else
+            {
+                text = ViewBag.AnnotationBulgarian.Filename;
+                <span class="DownloadFileName"> @Html.ActionLink(text, "DownloadDocument", "Thesis", new { documentId = ViewBag.AnnotationBulgarian.Id }, new { }) </span>
+            }
+        }
+        <div id="BgAnnotationUploader">
+            <noscript>			
+			    <p>Please enable JavaScript to use file uploader.</p>
+			    <!-- or put a simple form for upload here -->
+		    </noscript>         
+        </div>
+    </div>
+        
+    <div class="DownloadWrapper">
+        <h3> Анотация на Английски: </h3>
+        @{ 
+            if (ViewBag.AnnotationEnglish == null)
+            {
+                text = "Нямате качен файл";
+                <span class="DownloadFileName"> @text </span>
+            }
+            else
+            {
+                text = ViewBag.AnnotationEnglish.Filename;
+                <span class="DownloadFileName"> @Html.ActionLink(text, "DownloadDocument", "Thesis", new { documentId = ViewBag.AnnotationEnglish.Id }, new { }) </span>
+            }
+        }
+        <div id="EnAnnotationUploader">
+            <noscript>			
+			    <p>Please enable JavaScript to use file uploader.</p>
+			    <!-- or put a simple form for upload here -->
+		    </noscript>         
+        </div>
+    </div>
+        
+    <div class="DownloadWrapper">
+        <h3> Сорс Код: </h3>
+        @{ 
+            if (ViewBag.SourceCode == null)
+            {
+                text = "Нямате качен файл";
+                <span class="DownloadFileName"> @text </span>
+            }
+            else
+            {
+                text = ViewBag.SourceCode.Filename;
+                <span class="DownloadFileName"> @Html.ActionLink(text, "DownloadDocument", "Thesis", new { documentId = ViewBag.SourceCode.Id }, new { }) </span>
+            }
+        }
+        <div id="SourceCodeUploader">
+            <noscript>			
+			    <p>Please enable JavaScript to use file uploader.</p>
+			    <!-- or put a simple form for upload here -->
+		    </noscript>         
+        </div>
+    </div> 
+          
+    }
+
+</fieldset>
+<p>
+    @Html.ActionLink("Назад", "Index")
+</p>
+
+@section Scripts
+{
+    <link href="@Href("~/Content/FileUploader/fileuploader.css")" rel="stylesheet" type="text/css" />
+    <script type="text/javascript"; src='@Href("~/Scripts/FileUploader/fileuploader.js")'></script>
+
+    @if( Model != null )
+    {
+        
+        var fileUploads = new[] {
+               new { MethodName = "UploadThesisDocument"             , divName = "ThesisUploader"      , functionName = "CreateThesisUploader"       },
+               new { MethodName = "UploadAnnotationBulgarianDocument", divName = "BgAnnotationUploader", functionName = "CreateBgAnnotationUploader" },
+               new { MethodName = "UploadAnnotationEnglishDocument"  , divName = "EnAnnotationUploader", functionName = "CreateEnAnnotationUploader" },
+               new { MethodName = "UploadThesisSourceCode"           , divName = "SourceCodeUploader"  , functionName = "CreateSourceCodeUploader"   },
+        };
+        
+        foreach ( var obj in fileUploads )
+        {
+            <script type="text/javascript">
+                var @obj.functionName = function(){            
+                    var uploader = new qq.FileUploader({
+                        element: document.getElementById('@obj.divName'),
+                        action: '@Url.Action( obj.MethodName , "Thesis", new { personId = Model.Student.PersonId })',
+                        debug: true
+                    });
+                }
+                // in your app create uploader as soon as the DOM is ready
+                // don't wait for the window to load
+                window.addEventListener( 'load', @obj.functionName, false );
+            </script>
+        }
+    }
+}

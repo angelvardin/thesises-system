@@ -1,0 +1,43 @@
+﻿body {
+}
+
+#ConsultantsTable td
+{
+    vertical-align: top;
+    padding-top: 0px;
+}
+
+.DownloadWrapper{
+    border: 1px solid green;
+    padding:10px;
+    margin-bottom:10px;
+}
+
+.DownloadFileName {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#ConsultantsDropDown
+{
+    display: inline;
+    margin-right: 10px;
+}
+
+#ConsultantsListBox
+{
+    display:inline;
+    width: 100%;
+    height: 100%;
+}
+
+#addConsultantButton,
+#deleteConsultant
+{
+    vertical-align: top;
+    /*position: relative;*/
+    /*display: inline-block;*/
+    top: 0px;
+    left: 0px;
+}
+

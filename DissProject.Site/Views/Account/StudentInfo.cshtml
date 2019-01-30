@@ -1,0 +1,57 @@
+﻿@model DissProject.Site.Models.StudentInfo
+
+@{
+    var formOfEducation = new List<SelectListItem>();
+    formOfEducation.Add(new SelectListItem() { Text = "Редовна", Value = "FullTimeStudy" });
+    formOfEducation.Add(new SelectListItem() { Text = "Задочна", Value = "PartTimeStudy" });
+    formOfEducation.Add(new SelectListItem() { Text = "Индивидуална", Value = "IndividualFormOfStudy" });
+
+    var graduationYear = new List<SelectListItem>();
+    graduationYear.Add(new SelectListItem() { Text = "Първа", Value = "1" });
+    graduationYear.Add(new SelectListItem() { Text = "Втора", Value = "2" });
+    graduationYear.Add(new SelectListItem() { Text = "Трета", Value = "3" });
+    graduationYear.Add(new SelectListItem() { Text = "Четвърта", Value = "4" });
+
+        
+}
+
+    
+    <fieldset>
+        <legend>Информация</legend>
+        
+            <div class="editor-label"> 
+                @Html.LabelFor(model => model.FacultyNumber)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.FacultyNumber)
+                @Html.ValidationMessageFor(m => m.FacultyNumber)
+            </div>
+
+            <div class="editor-label"> 
+                @Html.LabelFor(model => model.GraduationYear)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(m => m.GraduationYear, graduationYear, "----Избери----")
+                @Html.ValidationMessageFor(m => m.GraduationYear)
+            </div>
+
+            <div class="editor-label"> 
+                @Html.LabelFor(model => model.SubjectOfStudies)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.SubjectOfStudies)
+                @Html.ValidationMessageFor(m => m.SubjectOfStudies)
+            </div>
+
+            <div class="editor-label"> 
+                @Html.LabelFor(model => model.FormOfEducation)
+            </div>
+             <div class="editor-field">
+                @Html.DropDownListFor(m => m.FormOfEducation,formOfEducation,"----Избери----")
+                @Html.ValidationMessageFor(m => m.FormOfEducation)
+            </div>
+
+    </fieldset>
+
+   
+

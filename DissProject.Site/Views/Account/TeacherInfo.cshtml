@@ -1,0 +1,39 @@
+﻿@model DissProject.Site.Models.TeacherInfo
+
+
+@{
+    var title = new List<SelectListItem>();
+    title.Add(new SelectListItem() { Text = "Научен работник", Value = "Научен работник" });
+    title.Add(new SelectListItem() { Text = "Асистент", Value = "Асистент" });
+    title.Add(new SelectListItem() { Text = "Главен Асистент", Value = "Главен Асистент" });
+    title.Add(new SelectListItem() { Text = "Доцент", Value = "Доцент" });
+    title.Add(new SelectListItem() { Text = "Професор", Value = "Професор" });
+    title.Add(new SelectListItem() { Text = "Академик", Value = "Академик" });
+    title.Add(new SelectListItem() { Text = "Член Кореспондент", Value = "Член Кореспондент" });
+}
+
+    <fieldset>
+        <legend>TeacherInfo</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TeacherTitle)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(m => m.TeacherTitle,title,"---- Избери ----")
+            @Html.ValidationMessageFor(model => model.TeacherTitle)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Department)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(x => x.Department,ViewBag.Departments as SelectList,"----Избери----")
+            @Html.ValidationMessageFor(model => model.Department)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DateOfApproval)
+        </div>
+        <div class="editor-field">
+            @*@Html.EditorFor(m => m.DateOfApproval)*@
+            @Html.ValidationMessageFor(model => model.DateOfApproval)
+        </div>
+    </fieldset>
+

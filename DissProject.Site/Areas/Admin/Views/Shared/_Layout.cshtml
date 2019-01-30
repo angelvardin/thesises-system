@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title </title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/css")
+        @Styles.Render("~/Content/themes/base/css")
+       
+        @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/bundles/jquery")
+    
+        
+        @Scripts.Render("~/bundles/jqueryui")
+
+
+
+    </head>
+    <body>
+        <header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p class="site-title">@Html.ActionLink("Администраторски панел", "Index", "../Home")</p>
+                </div>
+                <div class="float-right">
+                    <section id="login">
+                        @Html.Partial("_LoginPartialAdmin")
+                    </section>
+                    <nav>
+                        <ul id="menu">
+                            <li>@Html.ActionLink("Одобри", "Index", "User")</li>
+                            <li>@Html.ActionLink("Потребители", "AllUsers", "User")</li>
+                            <li>@Html.ActionLink("Катедри","Index","Department")</li> 
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <div id="body">
+             <section class="featured">
+                <div class="content-wrapper">
+                    <hgroup class="title">
+                        <h1>@ViewBag.Title.</h1>
+                        <h2>@ViewBag.Message</h2>
+                    </hgroup>
+                </div>
+            </section>
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+        </div>
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year - - Ангел, Благовеста, Георги, Димитър, Мартин, Цветелина</p>
+                </div>
+            </div>
+        </footer>
+
+        
+        @RenderSection("scripts", required: false)
+    </body>
+</html>
